@@ -18,11 +18,13 @@ class _NewTransactionState extends State<NewTransaction> {
   void _subimt() {
     final titleTex = _titleController.text;
     final amountTex = double.parse(_amountController.text);
-
-    if (titleTex.isEmpty || amountTex <= 0) {
+    if (_amountController.text.isEmpty) {
       return;
     }
-    widget.f(titleTex, amountTex);
+    if (titleTex.isEmpty || amountTex <= 0 || _timecontroler == null) {
+      return;
+    }
+    widget.f(titleTex, amountTex, _timecontroler);
     Navigator.of(context).pop();
   }
 
@@ -61,7 +63,7 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             TextField(
               cursorColor: Colors.teal[900],
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Amount',
               ),
               controller: _amountController,
@@ -72,9 +74,11 @@ class _NewTransactionState extends State<NewTransaction> {
               height: 70,
               child: Row(
                 children: [
-                  Text(_timecontroler == null
-                      ? 'No date Chosen'
-                      : DateFormat.yMd().format(_timecontroler)),
+                  Expanded(
+                    child: Text(_timecontroler == null
+                        ? 'No date Chosen'
+                        : DateFormat.yMd().format(_timecontroler)),
+                  ),
                   FlatButton(
                       onPressed: _presentDaydatePicker,
                       child: Text(

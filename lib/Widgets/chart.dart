@@ -16,6 +16,7 @@ class Chart extends StatelessWidget {
 
       for (var i = 0; i < recentTransaction.length; i++) {
         if (recentTransaction[i].date.day == weekDay.day &&
+            recentTransaction[i].date.month == weekDay.month &&
             recentTransaction[i].date.year == weekDay.year) {
           totalSum += recentTransaction[i].amount;
         }
@@ -37,7 +38,7 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(20),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Row(
